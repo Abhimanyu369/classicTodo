@@ -4,6 +4,10 @@ const cors = require('cors');
 const sequelize = require('./database');
 const app = express();
 
+const authRoutes = require('./routes/auth');
+const userRoute = require('./routes/user');
+const taskRoutes = require('./routes/task');
+
 sequelize
   .sync()
   .then(() => console.log('Database Connected !'))
@@ -11,6 +15,10 @@ sequelize
 
 app.use(express.json());
 app.use(cors());
+
+app.use('/api', authRoutes);
+app.use('/api', userRoute);
+app.use('/api', taskRoutes);
 
 const port = process.env.PORT || 8000;
 
